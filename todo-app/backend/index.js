@@ -1,10 +1,15 @@
 import express from "express";
 import mongoose from "mongoose";
+import cors from "cors";
 import "dotenv/config";
 import router from "./routes/TodoRoute.js";
 
 const app = express();
 const port = process.env.port || 4000;
+
+// middleware
+app.use(express.json());
+app.use(cors());
 
 // mongoDB connect
 mongoose
