@@ -33,7 +33,7 @@ export const updateTodo = async (req, res) => {
   const { _id, text } = req.body;
 
   try {
-    const updatedTodo = await Todo.findByIdAndUpdate(_id, { text: text });
+    const updatedTodo = await Todo.findByIdAndUpdate(_id, { text });
     console.log("updated successfully:", updatedTodo);
     res.status(201).json(updatedTodo);
   } catch (error) {
@@ -43,7 +43,7 @@ export const updateTodo = async (req, res) => {
 };
 
 export const deleteTodo = async (req, res) => {
-  const { _id } = req.body;
+  const { _id } = req.query;
 
   if (!_id) {
     return res.status(400).json({ message: "Todo ID is required" });
@@ -54,11 +54,9 @@ export const deleteTodo = async (req, res) => {
     if (!deletedTodo) {
       return res.status(404).json({ message: "No Todo found" });
     }
-
-    console.log("Delete successfully:");
-    res.status(201).json({ message: "Delete seccuesfully" });
+    res.status(200).json({ message: "Deleted successfully", deletedTodo });
   } catch (error) {
-    console.error(`Error adding todo: ${error}`);
+    console.error("Error deleting todo:", error);
     res.status(500).json({ message: "Failed to delete todo" });
   }
 };
